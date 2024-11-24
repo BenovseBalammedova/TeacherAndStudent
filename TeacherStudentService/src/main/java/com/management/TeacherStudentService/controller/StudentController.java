@@ -1,64 +1,61 @@
 package com.management.TeacherStudentService.controller;
 
-import com.management.TeacherStudentService.entity.Student;
-import com.management.TeacherStudentService.entity.Teacher;
-import com.management.TeacherStudentService.service.CommonService;
 import com.management.TeacherStudentService.service.StudentService;
+import com.management.TeacherStudentService.dto.StudentRequestDto;
+import com.management.TeacherStudentService.dto.StudentResponceDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/students")
 public class StudentController {
 
-    private final CommonService<Student> common;
 
-    private final StudentService student;
+    private final StudentService service;
 
-    public StudentController(CommonService<Student> common, StudentService student) {
-        this.common = common;
-        this.student = student;
+    public StudentController(StudentService service) {
+        this.service = service;
     }
 
-    @GetMapping("/students/get-all")
-    public List<Student> getAll() {
-        return common.getAll();
+    @GetMapping("/get-all")
+    public List<StudentResponceDto> getAll() {
+        return service.getAll();
     }
 
-    @GetMapping("/student/{id}")
-    public Student getById(@PathVariable Long id) {
-        return common.getById(id);
+    @GetMapping("/{id}")
+    public StudentResponceDto getById(@PathVariable Long id) {
+        return service.getById(id);
     }
 
-    @DeleteMapping("/student/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
-        common.delete(id);
+        service.delete(id);
     }
 
-    @PostMapping("/student/save")
-    public void save(@RequestBody Student obj) {
-        common.save(obj);
+    @PostMapping("/save")
+    public void save(@RequestBody StudentRequestDto obj) {
+        service.save(obj);
     }
 
-    @PutMapping("/student/update/{id}")
-    public void update(@PathVariable Long id, @RequestBody Student obj) {
-        common.update(id, obj);
+    @PutMapping("/update/{id}")
+    public void update(@PathVariable Long id, @RequestBody StudentRequestDto obj) {
+        service.update(id, obj);
     }
 
-    @GetMapping("/student/getByMajor/{major}")
-    public List<Student> getByMajor(@PathVariable String major) {
-        return student.getByMajor(major);
+    @GetMapping("/get-By-Major/{major}")
+    public List<StudentResponceDto> getByMajor(@PathVariable String major) {
+        return service.getByMajor(major);
     }
 
-    @GetMapping("/students/getByCourseYear/{courseYear}")
-    public List<Student> getByCourseYear(@PathVariable Short courseYear) {
-        return student.getByCourseYear(courseYear);
+    @GetMapping("/get-By-Course-Year/{courseYear}")
+    public List<StudentResponceDto> getByCourseYear(@PathVariable Short courseYear) {
+        return service.getByCourseYear(courseYear);
     }
 
-    @GetMapping("/students/{gpa1}/{gpa2}")
-    public List<Student> getByGpaInterval(@PathVariable Double gpa1, @PathVariable Double gpa2) {
-        return student.getByGpaInterval(gpa1, gpa2);
+    @GetMapping("/{gpa1}/{gpa2}")
+    public List<StudentResponceDto> getByGpaInterval(@PathVariable Double gpa1, @PathVariable Double gpa2) {
+        return service.getByGpaInterval(gpa1, gpa2);
     }
 
 }

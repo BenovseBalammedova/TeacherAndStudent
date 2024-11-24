@@ -1,15 +1,27 @@
 package com.management.TeacherStudentService.service;
 
+import com.management.TeacherStudentService.dto.TeacherRequestDto;
+import com.management.TeacherStudentService.dto.TeacherResponseDto;
 import com.management.TeacherStudentService.entity.Teacher;
 
 import java.util.List;
 
 public interface TeacherService {
 
-    List<Teacher> getBySubject(String subject);
+    List<TeacherResponseDto> getAll();
 
-    List<Teacher> getByUpperExperience(Integer exp);
+    TeacherResponseDto getById(Long id);
 
-    List<Teacher> getBySalaryInterval(Double lowerSalary, Double upperSalary);
+    void delete(Long id);
+
+    void save(TeacherRequestDto obj);
+
+    void update(Long id, TeacherRequestDto obj);
+
+    List<TeacherResponseDto> getBySubject(String subject);
+
+    List<TeacherResponseDto> getByUpperExperience(Integer exp);
+
+    List<TeacherResponseDto> getBySalaryInterval(Double lowerSalary, Double upperSalary);
 
 }
