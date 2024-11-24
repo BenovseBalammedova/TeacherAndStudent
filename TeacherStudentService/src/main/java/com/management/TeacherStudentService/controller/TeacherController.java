@@ -1,63 +1,63 @@
 package com.management.TeacherStudentService.controller;
 
+import com.management.TeacherStudentService.dto.TeacherRequestDto;
+import com.management.TeacherStudentService.dto.TeacherResponseDto;
 import com.management.TeacherStudentService.entity.Teacher;
-import com.management.TeacherStudentService.service.CommonService;
 import com.management.TeacherStudentService.service.TeacherService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/teachers")
 public class TeacherController {
 
-    private final CommonService<Teacher> common;
 
-    private final TeacherService teacher;
 
-    public TeacherController(CommonService<Teacher> common, TeacherService teacher) {
-        this.common = common;
-        this.teacher = teacher;
+    private final TeacherService service;
+
+    public TeacherController(TeacherService service) {
+        this.service = service;
     }
 
-    @GetMapping("/teachers/get-all")
-    public List<Teacher> getAll() {
-        return common.getAll();
+    @GetMapping("/get-all")
+    public List<TeacherResponseDto> getAll() {
+        return service.getAll();
     }
 
-    @GetMapping("/teacher/{id}")
+    @GetMapping("/{id}")
     public Object getById(@PathVariable Long id) {
-        return common.getById(id);
+        return service.getById(id);
     }
 
-    @DeleteMapping("/teacher/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
-        common.delete(id);
+        service.delete(id);
     }
 
-    @PostMapping("/teacher/save")
-    public void save(@RequestBody Teacher obj) {
-        common.save(obj);
+    @PostMapping("/save")
+    public void save(@RequestBody TeacherRequestDto obj) {
+        service.save(obj);
     }
 
-    @PutMapping("/teacher/update/{id}")
-    public void update(@PathVariable Long id, @RequestBody Teacher obj) {
-        common.update(id, obj);
+    @PutMapping("/update/{id}")
+    public void update(@PathVariable Long id, @RequestBody TeacherRequestDto obj) {
+        service.update(id, obj);
     }
 
-    @GetMapping("/teacher/getBySubject/{subject}")
-    List<Teacher> getBySubject(@PathVariable String subject) {
-        return teacher.getBySubject(subject);
+    @GetMapping("/get-By-Subject/{subject}")
+    List<TeacherResponseDto> getBySubject(@PathVariable String subject) {
+        return service.getBySubject(subject);
     }
 
-    @GetMapping("/teacher/getByUpperExperience/{exp}")
-    List<Teacher> getByUpperExperience(@PathVariable Integer exp) {
-        return teacher.getByUpperExperience(exp);
+    @GetMapping("/get-By-Upper-Experience/{exp}")
+    List<TeacherResponseDto> getByUpperExperience(@PathVariable Integer exp) {
+        return service.getByUpperExperience(exp);
     }
 
-    @GetMapping("/teacher/salary/{lowerSalary}/{upperSalary}")
-    List<Teacher> getBySalaryInterval(@PathVariable Double lowerSalary, @PathVariable Double upperSalary) {
-        return teacher.getBySalaryInterval(lowerSalary, upperSalary);
+    @GetMapping("/salary/{lowerSalary}/{upperSalary}")
+    List<TeacherResponseDto> getBySalaryInterval(@PathVariable Double lowerSalary, @PathVariable Double upperSalary) {
+        return service.getBySalaryInterval(lowerSalary, upperSalary);
     }
 
 }
